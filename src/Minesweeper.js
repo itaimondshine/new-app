@@ -71,6 +71,7 @@ import BoardHead from './components/BoardHead';
 
     //end game click
     reseetButton() {
+        
         window.location.reload();
 
     }
