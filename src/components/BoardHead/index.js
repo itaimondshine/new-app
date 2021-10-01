@@ -15,10 +15,9 @@ function BoardHead(props){
 
     return (
         <div className="board-head">
-        <div className="flag-count"> {props.flagcount}</div>
         <button className="reset" onClick = {props.reseetButton}> Reset</button>
         <div className="timer"> {time}  </div>
-        <div className="flags"> {props.flagcount} </div>
+        <div className="flags"> flages remained: {props.mines - props.flagcount} </div>
         <div className="openCells"> {props.openCells} </div>
 
 

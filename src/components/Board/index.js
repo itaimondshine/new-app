@@ -40,7 +40,7 @@ class Board extends Component {
         }
         const mines = []
 
-        for (let i = 0; i < props.mines && mines.length< props.mines; i++){
+        for (let i = 0; i < props.mines && mines.length<= props.mines; i++){
             let randomRow = Math.floor(Math.random()*props.rows);
             let randomColumn = Math.floor(Math.random() * props.columns);
             let cell = board[randomRow][randomColumn];
@@ -178,6 +178,7 @@ for (let i = 0; i<newOpens.length; i++)
     updateFlag = Cell => {
         console.log("here in updateflag function");
         this.props.increamentFlags();
+        this.props.increamentOpenCells(1);
         let currentcell = this.state.rows[Cell.y][Cell.x];
         currentcell.hasFlag = true;
         let newRows = this.state.rows;
@@ -194,6 +195,7 @@ for (let i = 0; i<newOpens.length; i++)
 
     open = Cell => {
 
+        this.props.checkIfWin();
         this.setState({color:'green'})
             if (this.props.status === 0){
                 //start the game
@@ -276,6 +278,7 @@ for (let i = 0; i<newOpens.length; i++)
             openCleanSpaces = {this.openCleanSpaces}
             updateFlag = {this.updateFlag}
             key={index}
+            increamentOpenCells = {this.increamentOpenCells}
             color = {this.state.color}
           />
         ));

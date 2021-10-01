@@ -17,9 +17,11 @@ let RenderCell = function(props) {
     //first case - the cell has a mine -> the game is over.  
       if (props.data.hasMine) {
         return (
-          <div className="cell open"              style={{ backgroundColor: props.color  }} 
+          <div className="cell open"  style={{ backgroundColor: props.color  }} 
            onContextMenu={() => props.updateFlag(props.data)} onClick={() => props.open(props.data)}> 
-          {props.data.hasFlag && <img src = {flag} height = "50" width = "50"/>}
+           {props.data.hasFlag && <img src = {flag} height = "50" width = "50" />}
+
+           
 
           </div>
         );

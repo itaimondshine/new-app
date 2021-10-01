@@ -13,7 +13,7 @@ import BoardHead from './components/BoardHead';
                 rows: props.rows,
                 columns : props.columns,
                 flags: 0,
-                mines: 10,
+                mines: props.mines,
                 time: 0,
                 status: 0, //at game starts: waiting, running, ended
                 openCells : 0
@@ -30,6 +30,9 @@ import BoardHead from './components/BoardHead';
     
     }
 
+x
+    
+
     tick = ()=>
     {
         if (this.state.status == 1) {
@@ -40,10 +43,10 @@ import BoardHead from './components/BoardHead';
 
 
 // if the player opned all the cells in the game
-    checkIfWin() {
-
-
-
+    checkIfWin = ()=> {
+        let numOfCells = this.state.rows * this.state.rows;
+        if (this.state.openCells == numOfCells )
+        alert("You win!!!");
 
     }
 
@@ -55,8 +58,9 @@ import BoardHead from './components/BoardHead';
 
 
     startTimer= () => {
-        let  interval = setInterval(this.tick, 1000);
-        this.setState({time:interval});
+        let interval = null
+         interval = setInterval(this.tick, 1000);
+        this.setState({interval:interval});
     };
 
 
@@ -71,7 +75,7 @@ import BoardHead from './components/BoardHead';
 
     //end game click
     reseetButton() {
-        
+
         window.location.reload();
 
     }
@@ -115,7 +119,8 @@ import BoardHead from './components/BoardHead';
                     <div className = 'boardheader'>
                     <BoardHead time = {this.state.time} flagcount= {this.state.flags} openCells= {this.state.openCells}
                     startTimer = {this.startTimer}
-                    reseetButton = {this.reseetButton}/>
+                    reseetButton = {this.reseetButton}
+                    mines = {this.state.mines}/>
                     </div>
 
 
@@ -128,6 +133,7 @@ import BoardHead from './components/BoardHead';
                     updateStatus = {this.updateStatus}
                     startTimer = {this.startTimer}
                     reseetButton = {this.reseetButton}
+                    checkIfWin = {this.checkIfWin}
                 /> 
                 </div>
 

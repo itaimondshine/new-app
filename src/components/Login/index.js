@@ -10,8 +10,8 @@ import flag from "/Users/itaimondshine/SampleJS/new-app/src/components/Cell/flag
     constructor(props){
         super(props);
         this.state = {
-            rows: 8,
-            columns : 8,
+            rows: 9,
+            columns : 9,
             mines : 10,
             submitted: false,
 
@@ -55,14 +55,15 @@ import flag from "/Users/itaimondshine/SampleJS/new-app/src/components/Cell/flag
     render() {
 
         if (this.state.submitted) {  
-            return <Minesweeper rows = {this.state.rows} columns = {this.state.columns}/>
+            return <Minesweeper rows = {this.state.rows} columns = {this.state.columns} mines = {this.state.mines}/>
 
         }
 
         return (
 
-
             <div className="login"> 
+            <h1> Login start</h1>
+
             <form >
 
             <label>
@@ -73,29 +74,19 @@ import flag from "/Users/itaimondshine/SampleJS/new-app/src/components/Cell/flag
 
             <label>
             Enter Number of Columns:
-            <input type ="number" value = { this.state.columns} onChange = 
-            {this.hadnleColumnsChange} />
-
+            <input type ="number" value = { this.state.columns} onChange = {this.hadnleColumnsChange} />
             </label>
             
-
-            </form>
-
             <label>
-            Enter Number Of Mines:
-                <input type ="number"  name =
-                 "mines" min = "8" max = "100" value = {this.state.mines} onChange = 
-                 {this.hadnleMinesChange } />
+            Enter Number Of Mines: 
+            <input type ="number" value = {this.state.mines} onChange =  {this.hadnleMinesChange } />
             </label>
 
             <button type="submit" onClick= {this.handleSubmit}> enter params </button>
     
 
 
-
-            <div>
-            <img src = {flag}/>
-            </div>
+            </form>
 
             </div>
             
