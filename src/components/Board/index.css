@@ -1,0 +1,22 @@
+
+  .board .row {
+    display: flex;
+    height: 10000px; }
+    .board .row:last-child {
+      border-bottom: none;
+      height: 100px; }
+    .board .row .cell {
+      border-right: 1px solid #444;
+      width: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #444; }
+      .board .row .cell.open {
+        background-color: #d4d4d4; }
+        .board .row .cell.open:hover {
+          background-color: #d4d4d4; }
+      .board .row .cell:hover {
+        background-color: #eeeeee; }
+      .board .row .cell:last-child {
+        border-right: none; }
