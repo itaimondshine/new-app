@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Minesweeper from './Minesweeper';
-import Login from './components/Login'
+import Login from './components/Login/Login'
 import './index.css';
 
 

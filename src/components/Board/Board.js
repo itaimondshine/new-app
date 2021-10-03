@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Cell from '../Cell';
-import Row from '../Row'
+import Cell from '../Cell/Cell';
+import Row from '../Row/Row'
 
 
 class Board extends Component {
@@ -8,16 +8,13 @@ class Board extends Component {
     constructor(props) {
         super(props);
 
-        this.state= {
-            rows : this.createBoard(props),
-            color : 'solid'
-        };
+        this.state= {table: this.createtable(props), color : 'solid'};
         
         this.open = this.open.bind(this);
         this.openCleanSpaces = this.openCleanSpaces.bind(this);
     }
 
-    createBoard = props => {
+    createtable = props => {
         let board = [];
         
         for (let i = 0; i < props.rows; i++){
@@ -34,9 +31,8 @@ class Board extends Component {
                     hasFlag: false
                 });
             }
-            //now we need to add the mines
 
-
+//add the mines to the table
         }
         const mines = []
 
@@ -50,7 +46,7 @@ class Board extends Component {
             }
         }
 
-
+//add the count (number of adjacent mines arount) to the cell propety
         let r = props.rows;
         let c = props.columns;
         let dir = [[1,0], [-1,0], [0,1], [0,-1], [-1,-1], [-1,1], [1,1], [1,-1]];
@@ -87,17 +83,18 @@ class Board extends Component {
         }
 
         findsomeofneighbors(board);
-        console.log(mines);
-        console.log(board);
         return board;
-
     };
 
 
 
 
 
-   handleLeftClick = Cell =>
+
+
+
+    // a function that gets a cell and incremaens the number of flags and update the boolean of this cel
+    handleLeftClick = Cell =>
    {
          Cell.isOpen = true;
          let newFlags = this.props.flags+ +1 
@@ -109,32 +106,17 @@ class Board extends Component {
         
 
 
-    //a function that turn on and turn off flags
-
-
-
-
-    //update the count value of each cell
-
-
-
-
     //a function that opens all the cells around a cell (if has no mines and its not a flag)
-
-
-
-    // a function that gets a cell and incremaens the number of flags and update the boolean of this cel
-
 
    openCleanSpaces = Cell => {
 
-    let currentcell = this.state.rows[Cell.y][Cell.x];
-    let newRows = this.state.rows;
-    let newOpens = []
+    let currentcell = this.state.table[Cell.y][Cell.x];
+    let newRows = this.state.table;
+    let newOpens = []   //create empty array of all the cells that opend in the first iterations
     newOpens.push(currentcell);
     let i = 0;
 
-
+//iterate over the number of open cells
 for (let i = 0; i<newOpens.length; i++)
 {
     for (let r = -1; r <= 1; r++)
@@ -144,17 +126,13 @@ for (let i = 0; i<newOpens.length; i++)
               let newx = newOpens[i].x + c;
               let newy = newOpens[i].y + r;
               console.log(newx,newy);
-                if (newx>=0 && newy>=0 && newx < this.state.rows.length && newy < this.state.rows.length)
+                if (newx>=0 && newy>=0 && newx < this.state.table.length && newy < this.state.table.length)
                   {
                     if (newRows[newy][newx].count === 0 && !newRows[newy][newx].hasMine && !newRows[newy][newx].hasFlag && !newRows[newy][newx].isOpen)
                     {
                         newRows[newy][newx].isOpen = true;
-                        console.log("new one");
-                        console.log('second');
                         newOpens.push(newRows[newy][newx]);
-                        console.log(newOpens);
                         this.props.increamentOpenCells(newOpens.length);
-                        // this.openCleanSpaces(newRows[newy][newx]);
                   }
           }
         
@@ -174,85 +152,79 @@ for (let i = 0; i<newOpens.length; i++)
 
 
 
-
+//update the number of flags - when right click
     updateFlag = Cell => {
         console.log("here in updateflag function");
         this.props.increamentFlags();
         this.props.increamentOpenCells(1);
-        let currentcell = this.state.rows[Cell.y][Cell.x];
+        let currentcell = this.state.table[Cell.y][Cell.x];
         currentcell.hasFlag = true;
-        let newRows = this.state.rows;
+        let newRows = this.state.table;
         newRows[Cell.y][Cell.x] = currentcell;
         this.setState({rows:newRows});
     }    
 
 
-//not finished
-
 
     
 
+    
+//a function that deals when the cell is open - 3 cases
 
     open = Cell => {
 
-        this.props.checkIfWin();
-        this.setState({color:'green'})
+
+        this.props.checkIfWin();   //always check if the player is winning
+        this.setState({color:'Beige'})   //change the color of the cell when opned
             if (this.props.status === 0){
                 //start the game
                 let op = 1 //op for starting the game
                 this.props.updateStatus(op);
                 alert("start the game")
-                this.props.startTimer();
-
-                
+                this.props.startTimer();   //reset the timer
             };
 
            
-            let currentcell = this.state.rows[Cell.y][Cell.x];
+            let currentcell = this.state.table[Cell.y][Cell.x];
             console.log(currentcell);
-            // if you clicked a mine and havn't started the game yet
-
-            //and status 
 
     if (!currentcell.isOpen){
+
+        // if you clicked on empty cell - open all the empty cells (count = 0) around it
             if (currentcell.count == 0 && !currentcell.hasMine)
             {
                 currentcell.isOpen = true;
-                let newrows = this.state.rows;
+                let newrows = this.state.table;
                 newrows[Cell.y, Cell.x].isOpen = currentcell; 
                 this.setState({rows:newrows});
                 this.props.increamentOpenCells(1);
-                console.log("count = 0")
                 this.openCleanSpaces(currentcell);
             }
 
             else 
+
+            // if you clicked a mine and havn't started the game yet - initialize the game
             if (currentcell.hasMine && this.props.openCells === 0){
 
                 console.log("cell already has mine, restart");
-                let newRows = this.createBoard(this.props);
+                let newRows = this.createtable(this.props);
                 this.setState({rows:newRows});
                 
- 
             }
             
-            //check for 
             else 
-            //it shows the number of mines arount it - lets write a function that calcultates the number of mines
+            //it shows the number of mines arount it 
                 if (!currentcell.hasFlag && !currentcell.isOpen && !currentcell.hasMine && currentcell.count > 0 ) 
                 {
-                    // this.props.openGame();
                     currentcell.isOpen = true;
                     this.props.increamentOpenCells(1);
-                    let newrows = this.state.rows;
+                    let newrows = this.state.table;
                     newrows[Cell.y, Cell.x].isOpen = currentcell; 
                     this.setState({rows:newrows});
-                    console.log(this.state.rows);
-                    console.log(this.state.rows[Cell.y, Cell.x])
                     //show the count
                 }
             
-                //end game
+                //You clicked on a mine - end game
                 if (currentcell.hasMine && this.props.openCells!=0)
                 {
                     let op = 2;   // op for ending the game
@@ -270,7 +242,7 @@ for (let i = 0; i<newOpens.length; i++)
 
 
     render() {
-        let rows = this.state.rows.map((cells, index) => (
+        let rows = this.state.table.map((cells, index) => (
           <Row
             cells={cells}
             open={this.open}

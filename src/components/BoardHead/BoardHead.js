@@ -19,9 +19,6 @@ function BoardHead(props){
         <div className="timer"> {time}  </div>
         <div className="flags"> flages remained: {props.mines - props.flagcount} </div>
         <div className="openCells"> {props.openCells} </div>
-
-
-
         </div>
     );
 };

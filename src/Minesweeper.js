@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import reactDom from 'react-dom';
 import PropTypes from 'prop-types';
-import Board from './components/Board';
-import BoardHead from './components/BoardHead';
+import Board from './components/Board/Board';
+import BoardHead from './components/BoardHead/BoardHead';
 
  class Minesweeper extends React.Component {
 
@@ -30,9 +30,9 @@ import BoardHead from './components/BoardHead';
     
     }
 
-x
-    
 
+
+    // a function that increse the time every second
     tick = ()=>
     {
         if (this.state.status == 1) {
@@ -40,20 +40,6 @@ x
             this.setState({time:newtime});
         }
     }
-
-
-// if the player opned all the cells in the game
-    checkIfWin = ()=> {
-        let numOfCells = this.state.rows * this.state.rows;
-        if (this.state.openCells == numOfCells )
-        alert("You win!!!");
-
-    }
-
-
-    // setInterval= (fn,t) => {
-    //  this.intervals.push(setInterval(fn,t));}
-
 
 
 
@@ -65,19 +51,31 @@ x
 
 
 
+// if the player opned all the cells in the game
+    checkIfWin = ()=> {
+        let numOfCells = this.state.rows * this.state.columns;
+        if (this.state.openCells == numOfCells)
+        alert("You win!!!");
+
+    }
+
+
+
 
     
+//Update Functions
+
+
+//update the status of the game {0: not started, 1: running 2: end game}
     updateStatus = Number => {
         this.setState({status:Number});
     }
 
 
 
-    //end game click
+    //force a stopping of the game
     reseetButton() {
-
         window.location.reload();
-
     }
 
      // increament the number of flags by 1
@@ -87,34 +85,20 @@ x
          this.setState({flags: (currentNumber + 1)});
      }
 
-
+    //increase the number of open cells by 1
      increamentOpenCells(number)
      {
-        console.log("in increamentOpenCells");
-        this.setState({openCells: (this.state.openCells + number)}, console.log("helppp me"));
-        console.log(this.state.openCells);
+        this.setState({openCells: (this.state.openCells + number)});
     }
 
    
- //function that hanlde the first click that opens the game
-
-    // openGameClick = () => {
-    //     if (this.state.openCells == 0 && this.state.status == "not started") {
-    //       this.setState(
-    //         {
-    //         status: "running"
-    //         },
-    //         this.setInterval(this.tick, 1000)
-    //       );
-    //     }
-    // }
 
         render() {
             return (
                     
                 <div className = 'minesweeper'>
 
-                    <h1> My super game </h1>
+                    <h1> My Minesweeper Game </h1>
                     
                     <div className = 'boardheader'>
                     <BoardHead time = {this.state.time} flagcount= {this.state.flags} openCells= {this.state.openCells}

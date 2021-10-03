@@ -5,6 +5,7 @@ import reactDom from 'react-dom';
 import flag from "/Users/itaimondshine/SampleJS/new-app/src/components/Cell/flag.png"
 
 
+// class of the Login Screnn Component
  class Login extends React.PureComponent {
     
     constructor(props){
@@ -23,17 +24,18 @@ import flag from "/Users/itaimondshine/SampleJS/new-app/src/components/Cell/flag
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-
+//handler for rows change
     handleRowsChange(event) {
         this.setState({rows:event.target.value});
     }
 
+//handler for enter parms button
     handleSubmit(e) {
         e.preventDefault();
         this.setState({ submitted: true });  // set the flag on submit
-        console.log(this.state.input)
    }
 
+//handler for columns change
     hadnleColumnsChange(event) {
         this.setState({columns:event.target.value});
     }
@@ -66,7 +68,7 @@ import flag from "/Users/itaimondshine/SampleJS/new-app/src/components/Cell/flag
 
             <form >
 
-            <label>
+            <label name="rows">
             Enter Number Of Rows:
                 <input type ="number"  name = "rows" min = "8" max = "100" value = {this.state.rows} onChange = 
                  {this.handleRowsChange} />
@@ -74,12 +76,12 @@ import flag from "/Users/itaimondshine/SampleJS/new-app/src/components/Cell/flag
 
             <label>
             Enter Number of Columns:
-            <input type ="number" value = { this.state.columns} onChange = {this.hadnleColumnsChange} />
+            <input type ="number" name="cols" value = { this.state.columns} onChange = {this.hadnleColumnsChange} />
             </label>
             
             <label>
             Enter Number Of Mines: 
-            <input type ="number" value = {this.state.mines} onChange =  {this.hadnleMinesChange } />
+            <input type ="number" name="mines" value = {this.state.mines} onChange =  {this.hadnleMinesChange } />
             </label>
 
             <button type="submit" onClick= {this.handleSubmit}> enter params </button>
@@ -99,27 +101,3 @@ import flag from "/Users/itaimondshine/SampleJS/new-app/src/components/Cell/flag
 }
 
 export default Login
-
-// export default Login
-
-
-// class Login extends React.Component {
-//     state = {
-//       show: true,
-//     }
-  
-//     toggle = () => this.setState((currentState) => ({show: !currentState.show}));
-  
-//     render() {
-//       return (
-//         <div>
-//           <button onClick={this.toggle}>
-//             toggle: {this.state.show ? 'show' : 'hide'}
-//           </button>    
-//           {this.state.show && <div>Hi there</div>}
-//         </div>
-//        );
-//     }
-//   }
-
-//   export default Login
